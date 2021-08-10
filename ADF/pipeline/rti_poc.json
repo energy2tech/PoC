@@ -38,14 +38,12 @@
 						}
 					},
 					"sink": {
-						"type": "DelimitedTextSink",
+						"type": "ParquetSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
+							"type": "ParquetWriteSettings"
 						}
 					},
 					"enableStaging": false,
@@ -93,7 +91,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "adlsgen2csv",
+						"referenceName": "adlsgen2parquet",
 						"type": "DatasetReference"
 					}
 				]
