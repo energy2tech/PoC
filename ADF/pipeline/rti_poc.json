@@ -7,7 +7,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Lookup1",
+						"activity": "folder_name",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity(\"Lookup1\").output.value",
+						"value": "@activity(\"folder_name\").output.value",
 						"type": "Expression"
 					},
 					"activities": [
@@ -122,7 +122,7 @@
 				}
 			},
 			{
-				"name": "Lookup1",
+				"name": "folder_name",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
