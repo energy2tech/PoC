@@ -1,0 +1,21 @@
+{
+	"name": "adlsgen2parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLSGEN2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "*",
+				"folderPath": "*",
+				"fileSystem": "rti"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
