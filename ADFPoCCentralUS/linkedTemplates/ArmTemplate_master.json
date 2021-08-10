@@ -11,10 +11,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accessToken' of 'ADB'"
 		},
-		"ADLSGEN2_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'ADLSGEN2'"
-		},
 		"AzureSQLDB_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSQLDB'"
@@ -52,9 +48,6 @@
 					},
 					"ADB_accessToken": {
 						"value": "[parameters('ADB_accessToken')]"
-					},
-					"ADLSGEN2_accountKey": {
-						"value": "[parameters('ADLSGEN2_accountKey')]"
 					},
 					"AzureSQLDB_connectionString": {
 						"value": "[parameters('AzureSQLDB_connectionString')]"

@@ -8,9 +8,6 @@
 		"ADB_accessToken": {
 			"value": ""
 		},
-		"ADLSGEN2_accountKey": {
-			"value": ""
-		},
 		"AzureSQLDB_connectionString": {
 			"value": ""
 		},
