@@ -12,7 +12,7 @@
 				"type": "AzureBlobFSLocation",
 				"fileName": "*",
 				"folderPath": "*",
-				"fileSystem": "rti"
+				"fileSystem": "rti/output"
 			},
 			"compressionCodec": "snappy"
 		},
