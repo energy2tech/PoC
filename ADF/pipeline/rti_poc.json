@@ -48,7 +48,7 @@
 											"type": "Expression"
 										},
 										"wildcardFolderPath": {
-											"value": "@name",
+											"value": "*",
 											"type": "Expression"
 										},
 										"wildcardFileName": "*.csv",
