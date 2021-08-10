@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "*",
+				"fileName": "*.parquet",
 				"folderPath": "*",
 				"fileSystem": "rti/output"
 			},
