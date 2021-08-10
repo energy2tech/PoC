@@ -48,7 +48,42 @@
 							"fileExtension": ".txt"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "a",
+									"type": "String"
+								},
+								"sink": {
+									"name": "a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "b",
+									"type": "String"
+								},
+								"sink": {
+									"name": "b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "c",
+									"type": "String"
+								}
+							}
+						]
+					}
 				},
 				"inputs": [
 					{
