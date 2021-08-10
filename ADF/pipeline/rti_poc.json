@@ -48,7 +48,7 @@
 											"type": "Expression"
 										},
 										"wildcardFolderPath": {
-											"value": "@name/*",
+											"value": "@name",
 											"type": "Expression"
 										},
 										"wildcardFileName": "*.csv",
@@ -108,7 +108,10 @@
 							"inputs": [
 								{
 									"referenceName": "adlsgen2csv",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"name": "@item().name"
+									}
 								}
 							],
 							"outputs": [
