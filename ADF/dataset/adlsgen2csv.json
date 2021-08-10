@@ -10,8 +10,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "agency/2021-08-09",
-				"fileSystem": "rti"
+				"fileName": "*.csv",
+				"folderPath": "*",
+				"fileSystem": "rti/input"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
