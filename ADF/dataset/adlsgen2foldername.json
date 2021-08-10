@@ -1,5 +1,5 @@
 {
-	"name": "adlsgen2foldernmae",
+	"name": "adlsgen2foldername",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ADLSGEN2",
