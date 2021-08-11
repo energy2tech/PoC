@@ -47,10 +47,6 @@
 											"value": "@utcnow()",
 											"type": "Expression"
 										},
-										"wildcardFolderPath": {
-											"value": "*",
-											"type": "Expression"
-										},
 										"wildcardFileName": "*.csv",
 										"enablePartitionDiscovery": false
 									},
