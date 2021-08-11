@@ -12,13 +12,21 @@
 					"name": "DataLoading"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ftv_output",
+						"type": "DatasetReference"
+					},
+					"name": "Output"
+				}
+			],
 			"transformations": [
 				{
 					"name": "TimestampParsing"
 				}
 			],
-			"script": "source(output(\n\t\tcol as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> DataLoading\nDataLoading derive(col_fix = iif(length(col) == 14, 1, 0)) ~> TimestampParsing"
+			"script": "source(output(\n\t\tcol as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> DataLoading\nDataLoading derive(col_fix = iif(length(col) == 14, 1, 0)) ~> TimestampParsing\nTimestampParsing sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tumask: 0022,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Output"
 		}
 	}
 }
