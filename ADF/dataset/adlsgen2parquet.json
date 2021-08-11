@@ -10,7 +10,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileSystem": "rti/output"
+				"fileSystem": {
+					"value": "rti/output/@item().name",
+					"type": "Expression"
+				}
 			},
 			"compressionCodec": "snappy"
 		},
