@@ -6,30 +6,6 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "ADFPoCCentralUS"
-		},
-		"ADB_accessToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'ADB'"
-		},
-		"AzureSQLDB_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSQLDB'"
-		},
-		"AzureSQLDB_servicePrincipalKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'servicePrincipalKey' of 'AzureSQLDB'"
-		},
-		"ADLSGEN2_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://adlsgen2poccus.dfs.core.windows.net"
-		},
-		"AzureSQLDB_properties_typeProperties_servicePrincipalId": {
-			"type": "string",
-			"defaultValue": "ebd8bf29-95be-4601-ae48-6723a463ae97"
-		},
-		"AzureSQLDB_properties_typeProperties_tenant": {
-			"type": "string",
-			"defaultValue": "72f988bf-86f1-41af-91ab-2d7cd011db47"
 		}
 	},
 	"variables": {
@@ -57,8 +33,7 @@
 						"typeProperties": {
 							"dataset": {
 								"referenceName": "adlsgen2foldername",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							},
 							"fieldList": [
 								"childItems"
@@ -240,8 +215,7 @@
 							},
 							"dataset": {
 								"referenceName": "AzureSql",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							},
 							"firstRowOnly": false
 						}
@@ -381,30 +355,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSql')]",
 				"[concat(variables('factoryId'), '/datasets/adlsgen2csv')]",
 				"[concat(variables('factoryId'), '/datasets/adlsgen2parquet')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSql')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSQLDB",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "folder"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSQLDB')]"
 			]
 		},
 		{
@@ -455,9 +407,7 @@
 					}
 				]
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ADLSGEN2')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/adlsgen2foldername')]",
@@ -483,9 +433,7 @@
 				},
 				"schema": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ADLSGEN2')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/adlsgen2parquet')]",
@@ -518,58 +466,6 @@
 					"compressionCodec": "snappy"
 				},
 				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ADLSGEN2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ADB')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureDatabricks",
-				"typeProperties": {
-					"domain": "https://adb-4013178067497666.6.azuredatabricks.net",
-					"accessToken": {
-						"type": "SecureString",
-						"value": "[parameters('ADB_accessToken')]"
-					},
-					"existingClusterId": "0809-022959-jinn751"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ADLSGEN2')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('ADLSGEN2_properties_typeProperties_url')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSQLDB')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureSQLDB_connectionString')]",
-					"servicePrincipalId": "[parameters('AzureSQLDB_properties_typeProperties_servicePrincipalId')]",
-					"servicePrincipalKey": {
-						"type": "SecureString",
-						"value": "[parameters('AzureSQLDB_servicePrincipalKey')]"
-					},
-					"tenant": "[parameters('AzureSQLDB_properties_typeProperties_tenant')]"
-				}
 			},
 			"dependsOn": []
 		}

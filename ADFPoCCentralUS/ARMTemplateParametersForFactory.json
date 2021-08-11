@@ -11,8 +11,17 @@
 		"AzureSQLDB_connectionString": {
 			"value": ""
 		},
+		"AzureSQLDB_servicePrincipalKey": {
+			"value": ""
+		},
 		"ADLSGEN2_properties_typeProperties_url": {
 			"value": "https://adlsgen2poccus.dfs.core.windows.net"
+		},
+		"AzureSQLDB_properties_typeProperties_servicePrincipalId": {
+			"value": "ebd8bf29-95be-4601-ae48-6723a463ae97"
+		},
+		"AzureSQLDB_properties_typeProperties_tenant": {
+			"value": "72f988bf-86f1-41af-91ab-2d7cd011db47"
 		}
 	}
 }
