@@ -6,7 +6,7 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "rti_poc",
+					"referenceName": "rti_poc_static",
 					"type": "PipelineReference"
 				}
 			}
