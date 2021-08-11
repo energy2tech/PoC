@@ -108,10 +108,7 @@
 							"inputs": [
 								{
 									"referenceName": "adlsgen2csv",
-									"type": "DatasetReference",
-									"parameters": {
-										"name": "@item().name"
-									}
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
