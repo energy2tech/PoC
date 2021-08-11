@@ -11,7 +11,7 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileSystem": {
-					"value": "rti/output/@item().name",
+					"value": "rti/output",
 					"type": "Expression"
 				}
 			},
