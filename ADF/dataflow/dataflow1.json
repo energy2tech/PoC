@@ -18,7 +18,7 @@
 					"name": "TimestampParsing"
 				}
 			],
-			"script": "source(output(\n\t\tcol as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> DataLoading\nDataLoading derive(datetime_fix = iif(length(datetime) == 14, 1, 0)) ~> TimestampParsing"
+			"script": "source(output(\n\t\tcol as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> DataLoading\nDataLoading derive(datetime_fix = iif(length(col) == 14, toTimestamp(col, 'MM/dd/yyyy\\'T\\'HH:mm:ss'))) ~> TimestampParsing"
 		}
 	}
 }
