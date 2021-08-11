@@ -5,8 +5,10 @@
 		"annotations": [],
 		"type": "AzureSqlDatabase",
 		"typeProperties": {
-			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=azuresqlpoccentralus.database.windows.net;initial catalog=azuresqlpoc;user id=sqladmin",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkFERlBPQ0NFTlRSQUxVU18xZTg1ZDIzYy02NTM0LTRkNjUtOTRiYy1iOWJkY2Q2ODA2MWEiDQp9"
+			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=azuresqlpoccentralus.database.windows.net;initial catalog=azuresqlpoc",
+			"servicePrincipalId": "ebd8bf29-95be-4601-ae48-6723a463ae97",
+			"tenant": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkFERlBPQ0NFTlRSQUxVU18yZTVjY2YzMy0wNmRiLTQxYWUtYmUwMi0yZGVmMDRhNGViNWUiDQp9"
 		}
 	}
 }
