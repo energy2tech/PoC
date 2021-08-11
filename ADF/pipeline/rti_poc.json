@@ -146,7 +146,13 @@
 							"outputs": [
 								{
 									"referenceName": "adlsgen2parquet",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"FolderName": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
