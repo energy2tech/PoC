@@ -6,15 +6,19 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "ftv_timestamp",
+						"referenceName": "ftv_input",
 						"type": "DatasetReference"
 					},
-					"name": "TimestampParsing"
+					"name": "DataLoading"
 				}
 			],
 			"sinks": [],
-			"transformations": [],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> TimestampParsing"
+			"transformations": [
+				{
+					"name": "TimestampParsing"
+				}
+			],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> DataLoading\nDataLoading derive(datetime_fix = ERROR_FUNCTION('')) ~> TimestampParsing"
 		}
 	}
 }

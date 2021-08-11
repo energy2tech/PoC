@@ -1,5 +1,5 @@
 {
-	"name": "ftv_input",
+	"name": "ftv_output",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ADLSGEN2",
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "input.csv",
+				"fileName": "output.csv",
 				"fileSystem": "ftv"
 			},
 			"columnDelimiter": ",",
