@@ -18,7 +18,7 @@
 					"name": "TimestampParsing"
 				}
 			],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> DataLoading\nDataLoading derive(datetime_fix = ERROR_FUNCTION('')) ~> TimestampParsing"
+			"script": "source(output(\n\t\tdatetime as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> DataLoading\nDataLoading derive(datetime_fix = ERROR_FUNCTION('')) ~> TimestampParsing"
 		}
 	}
 }

@@ -18,6 +18,11 @@
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "datetime",
+				"type": "String"
+			}
+		]
 	}
 }
