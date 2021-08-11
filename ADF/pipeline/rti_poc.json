@@ -134,7 +134,13 @@
 							"inputs": [
 								{
 									"referenceName": "adlsgen2csv",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"FolderName": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
 								}
 							],
 							"outputs": [
