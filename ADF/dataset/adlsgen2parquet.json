@@ -5,19 +5,15 @@
 			"referenceName": "ADLSGEN2",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"name": {
-				"type": "string",
-				"defaultValue": "@item().name"
-			}
-		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": "*",
+				"folderPath": "*",
 				"fileSystem": {
-					"value": "rti/output/@name",
+					"value": "rti/output",
 					"type": "Expression"
 				}
 			},
