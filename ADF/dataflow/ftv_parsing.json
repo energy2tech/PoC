@@ -23,10 +23,10 @@
 			],
 			"transformations": [
 				{
-					"name": "TimestampParsing"
+					"name": "ReplaceInvalidSring"
 				}
 			],
-			"script": "source(output(\n\t\tcol as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> DataLoading\nDataLoading derive(col_fix = iif(length(col) == 14, col, '')) ~> TimestampParsing\nTimestampParsing sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tumask: 0022,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Output"
+			"script": "source(output(\n\t\tcol as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> DataLoading\nDataLoading derive(col_fix = iif(length(col) == 14, col, '')) ~> ReplaceInvalidSring\nReplaceInvalidSring sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tumask: 0022,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Output"
 		}
 	}
 }
