@@ -228,8 +228,14 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "AzureSql",
-									"type": "DatasetReference"
+									"referenceName": "rti_sql",
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
