@@ -2,7 +2,7 @@
 	"name": "cat_sql_as400",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureSQLDB_SQL",
+			"referenceName": "AzureSQLDB_ManagedId",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
