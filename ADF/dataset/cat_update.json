@@ -13,7 +13,8 @@
 				"type": "AzureBlobFSLocation",
 				"fileName": "update.xlsx",
 				"fileSystem": "caterpillar"
-			}
+			},
+			"firstRowAsHeader": true
 		},
 		"schema": []
 	}
