@@ -1,5 +1,5 @@
 {
-	"name": "cat_insert",
+	"name": "cat_update",
 	"properties": {
 		"activities": [
 			{
@@ -24,61 +24,13 @@
 						}
 					},
 					"sink": {
-						"type": "AzureSqlSink"
+						"type": "AzureSqlSink",
+						"preCopyScript": "truncate dbo.as400_staging",
+						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "id",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "id",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
-									"name": "item",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "item",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"source": {
-									"name": "value",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "value",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
-									"name": "cat",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "cat",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							}
-						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
@@ -88,7 +40,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "cat_insert",
+						"referenceName": "cat_update",
 						"type": "DatasetReference"
 					}
 				],
@@ -98,6 +50,33 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "Stored procedure1",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Copy data1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[masterinsertupdatedelete]"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSQLDB_ManagedId",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"annotations": []
