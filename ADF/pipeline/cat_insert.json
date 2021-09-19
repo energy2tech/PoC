@@ -24,9 +24,7 @@
 						}
 					},
 					"sink": {
-						"type": "AzureSqlSink",
-						"sqlWriterStoredProcedureName": "[dbo].[masterinsertupdatedelete]",
-						"disableMetricsCollection": false
+						"type": "AzureSqlSink"
 					},
 					"enableStaging": false,
 					"translator": {
@@ -46,7 +44,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "AzureSql",
+						"referenceName": "cat_sql_as400",
 						"type": "DatasetReference"
 					}
 				]

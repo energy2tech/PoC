@@ -25,7 +25,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "as400"
+			"table": "as400_staging"
 		}
 	}
 }
