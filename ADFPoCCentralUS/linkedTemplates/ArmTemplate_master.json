@@ -19,6 +19,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'servicePrincipalKey' of 'AzureSQLDB'"
 		},
+		"AzureSQLDB_ManagedId_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSQLDB_ManagedId'"
+		},
+		"AzureSQLDB_SQL_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSQLDB_SQL'"
+		},
 		"ADLSGEN2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsgen2poccus.dfs.core.windows.net"
@@ -67,6 +75,12 @@
 					"AzureSQLDB_servicePrincipalKey": {
 						"value": "[parameters('AzureSQLDB_servicePrincipalKey')]"
 					},
+					"AzureSQLDB_ManagedId_connectionString": {
+						"value": "[parameters('AzureSQLDB_ManagedId_connectionString')]"
+					},
+					"AzureSQLDB_SQL_connectionString": {
+						"value": "[parameters('AzureSQLDB_SQL_connectionString')]"
+					},
 					"ADLSGEN2_properties_typeProperties_url": {
 						"value": "[parameters('ADLSGEN2_properties_typeProperties_url')]"
 					},
@@ -79,6 +93,26 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "ADFPoCCentralUS_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ADFPoCCentralUS_ArmTemplate_0')]"
+			]
 		}
 	]
 }
