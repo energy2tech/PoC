@@ -1,5 +1,5 @@
 {
-	"name": "cat_update",
+	"name": "cat_as400",
 	"properties": {
 		"activities": [
 			{
@@ -40,7 +40,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "cat_update",
+						"referenceName": "cat_insert",
 						"type": "DatasetReference"
 					}
 				],
