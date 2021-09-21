@@ -74,7 +74,8 @@
 								"sink": {
 									"type": "DelimitedTextSink",
 									"storeSettings": {
-										"type": "AzureBlobFSWriteSettings"
+										"type": "AzureBlobFSWriteSettings",
+										"copyBehavior": "MergeFiles"
 									},
 									"formatSettings": {
 										"type": "DelimitedTextWriteSettings",
@@ -102,7 +103,7 @@
 											"type": "Expression"
 										},
 										"ChildName": {
-											"value": "concat(substring(@item().datestring, 0, 4), '/', substring(@item().datestring, 4, 2), '/', substring(@item().datestring, 6, 2))",
+											"value": "@concat(substring(item().datestring, 0, 4), '/', substring(item().datestring, 4, 2), '/', substring(item().datestring, 6, 2))",
 											"type": "Expression"
 										}
 									}
@@ -114,7 +115,11 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"ChildName": {
-											"value": "concat(substring(@item().datestring, 0, 4), '/', substring(@item().datestring, 4, 2), '/', substring(@item().datestring, 6, 2))",
+											"value": "@concat(substring(item().datestring, 0, 4), '/', substring(item().datestring, 4, 2), '/', substring(item().datestring, 6, 2))",
+											"type": "Expression"
+										},
+										"FileName": {
+											"value": "@item().datestring",
 											"type": "Expression"
 										}
 									}
