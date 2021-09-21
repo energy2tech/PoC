@@ -64,7 +64,7 @@
 										"type": "AzureBlobFSReadSettings",
 										"recursive": true,
 										"wildcardFolderPath": {
-											"value": "carrier/@item().item/concat(substring(@item().datestring, 0, 4), '/', substring(@item().datestring, 4, 2), '/', substring(@item().datestring, 6, 2))",
+											"value": "@item().item/concat(substring(@item().datestring, 0, 4), '/', substring(@item().datestring, 4, 2), '/', substring(@item().datestring, 6, 2))",
 											"type": "Expression"
 										},
 										"wildcardFileName": "*",
@@ -74,7 +74,8 @@
 								"sink": {
 									"type": "DelimitedTextSink",
 									"storeSettings": {
-										"type": "AzureBlobFSWriteSettings"
+										"type": "AzureBlobFSWriteSettings",
+										"copyBehavior": "MergeFiles"
 									},
 									"formatSettings": {
 										"type": "DelimitedTextWriteSettings",
