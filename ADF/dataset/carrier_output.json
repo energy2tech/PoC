@@ -8,9 +8,6 @@
 		"parameters": {
 			"ChildName": {
 				"type": "string"
-			},
-			"ParentName": {
-				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -23,7 +20,7 @@
 					"type": "Expression"
 				},
 				"fileSystem": {
-					"value": "carrier/@dataset().ParentName",
+					"value": "carrier/output",
 					"type": "Expression"
 				}
 			},
