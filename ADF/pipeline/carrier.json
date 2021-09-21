@@ -115,9 +115,10 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"ChildName": {
-											"value": "{concat(substring(@item().datestring, 0, 4), '/', substring(@item().datestring, 4, 2), '/', substring(@item().datestring, 6, 2))}",
+											"value": "concat(substring(@item().datestring, 0, 4), '/', substring(@item().datestring, 4, 2), '/', substring(@item().datestring, 6, 2))",
 											"type": "Expression"
-										}
+										},
+										"ParentName": "output"
 									}
 								}
 							]
