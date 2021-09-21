@@ -1,20 +1,22 @@
 {
-	"name": "carrier_input",
+	"name": "carrier_output",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ADLSGEN2",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
-		"type": "Excel",
+		"type": "DelimitedText",
 		"typeProperties": {
-			"sheetName": "Sheet1",
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "input",
+				"folderPath": "output",
 				"fileSystem": "carrier"
 			},
-			"firstRowAsHeader": true
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
 		},
 		"schema": []
 	}
