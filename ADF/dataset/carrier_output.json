@@ -5,13 +5,27 @@
 			"referenceName": "ADLSGEN2",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"ParentName": {
+				"type": "string"
+			},
+			"ChildName": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "output",
-				"fileSystem": "carrier"
+				"folderPath": {
+					"value": "@dataset().ChildName",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "carrier/@{dataset().ParentName}",
+					"type": "Expression"
+				}
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

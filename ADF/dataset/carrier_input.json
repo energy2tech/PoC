@@ -6,20 +6,27 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"FolderName": {
+			"ParentName": {
+				"type": "string"
+			},
+			"ChildName": {
 				"type": "string"
 			}
 		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
+			"sheetName": "Sheet1",
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"folderPath": {
-					"value": "@dataset().FolderName",
+					"value": "@dataset().ChildName",
 					"type": "Expression"
 				},
-				"fileSystem": "carrier/input"
+				"fileSystem": {
+					"value": "carrier/@{dataset().ParentName}",
+					"type": "Expression"
+				}
 			},
 			"firstRowAsHeader": true
 		},
