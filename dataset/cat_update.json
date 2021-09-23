@@ -1,0 +1,22 @@
+{
+	"name": "cat_update",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLSGEN2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "update.xlsx",
+				"fileSystem": "caterpillar"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,9 @@
+{
+	"name": "ADFPoCCentralUS",
+	"location": "centralus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "d9677cb2-7da0-4fea-9643-f467c65c1859",
+		"tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+	}
+}

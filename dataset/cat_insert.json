@@ -1,0 +1,22 @@
+{
+	"name": "cat_insert",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLSGEN2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "insert.xlsx",
+				"fileSystem": "caterpillar"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
