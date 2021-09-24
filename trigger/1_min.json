@@ -1,0 +1,17 @@
+{
+	"name": "1_min",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 2,
+				"startTime": "2021-09-23T19:46:00",
+				"timeZone": "Central Standard Time"
+			}
+		}
+	}
+}
