@@ -20,7 +20,7 @@
 						"referenceName": "BatchPoolStorage",
 						"type": "LinkedServiceReference"
 					},
-					"folderPath": "rest/python",
+					"folderPath": "input",
 					"referenceObjects": {
 						"linkedServices": [],
 						"datasets": []
