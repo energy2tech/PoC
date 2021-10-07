@@ -1,0 +1,19 @@
+{
+	"name": "rest_json_flatten",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLSGEN2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "rest_flatten",
+				"fileSystem": "rest"
+			}
+		},
+		"schema": {}
+	}
+}
