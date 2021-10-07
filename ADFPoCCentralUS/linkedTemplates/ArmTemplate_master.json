@@ -39,6 +39,10 @@
 			"type": "string",
 			"defaultValue": "72f988bf-86f1-41af-91ab-2d7cd011db47"
 		},
+		"rest_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "http://dummy.restapiexample.com/api/v1/employees"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -89,6 +93,9 @@
 					},
 					"AzureSQLDB_properties_typeProperties_tenant": {
 						"value": "[parameters('AzureSQLDB_properties_typeProperties_tenant')]"
+					},
+					"rest_properties_typeProperties_url": {
+						"value": "[parameters('rest_properties_typeProperties_url')]"
 					}
 				}
 			},
