@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": "python main.py",
+					"command": "pip install azure-storage-blob\npython main.py",
 					"resourceLinkedService": {
 						"referenceName": "BatchPoolStorage",
 						"type": "LinkedServiceReference"
