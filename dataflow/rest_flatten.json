@@ -1,0 +1,20 @@
+{
+	"name": "rest_flatten",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "REST",
+						"type": "DatasetReference"
+					},
+					"name": "rest"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\thttpMethod: 'GET',\n\ttimeout: 30,\n\tresponseFormat: ['type' -> 'json', 'documentForm' -> 'singleDocument']) ~> rest"
+		}
+	}
+}
