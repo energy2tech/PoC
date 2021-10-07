@@ -11,6 +11,7 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": "rest_raw",
+				"folderPath": "raw",
 				"fileSystem": "rest"
 			}
 		},
