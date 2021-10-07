@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "rest_json",
+						"referenceName": "rest_json_flatten",
 						"type": "DatasetReference"
 					},
 					"name": "sink"
