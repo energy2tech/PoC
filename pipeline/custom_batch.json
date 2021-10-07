@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": "'py batch.py'",
+					"command": "python main.py",
 					"resourceLinkedService": {
 						"referenceName": "BatchPoolStorage",
 						"type": "LinkedServiceReference"
