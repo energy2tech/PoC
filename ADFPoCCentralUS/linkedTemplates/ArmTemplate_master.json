@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accessToken' of 'ADB'"
 		},
+		"AzureBatch_accessKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessKey' of 'AzureBatch'"
+		},
 		"AzureSQLDB_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSQLDB'"
@@ -27,9 +31,25 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSQLDB_SQL'"
 		},
+		"BatchPoolStorage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'BatchPoolStorage'"
+		},
 		"ADLSGEN2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsgen2poccus.dfs.core.windows.net"
+		},
+		"AzureBatch_properties_typeProperties_batchUri": {
+			"type": "string",
+			"defaultValue": "https://pocbatch.centralus.batch.azure.com"
+		},
+		"AzureBatch_properties_typeProperties_poolName": {
+			"type": "string",
+			"defaultValue": "pocbatchpool"
+		},
+		"AzureBatch_properties_typeProperties_accountName": {
+			"type": "string",
+			"defaultValue": "pocbatch"
 		},
 		"AzureSQLDB_properties_typeProperties_servicePrincipalId": {
 			"type": "string",
@@ -85,6 +105,9 @@
 					"AzureSQLDB_SQL_connectionString": {
 						"value": "[parameters('AzureSQLDB_SQL_connectionString')]"
 					},
+					"BatchPoolStorage_connectionString": {
+						"value": "[parameters('BatchPoolStorage_connectionString')]"
+					},
 					"ADLSGEN2_properties_typeProperties_url": {
 						"value": "[parameters('ADLSGEN2_properties_typeProperties_url')]"
 					},
@@ -114,6 +137,18 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"AzureBatch_accessKey": {
+						"value": "[parameters('AzureBatch_accessKey')]"
+					},
+					"AzureBatch_properties_typeProperties_batchUri": {
+						"value": "[parameters('AzureBatch_properties_typeProperties_batchUri')]"
+					},
+					"AzureBatch_properties_typeProperties_poolName": {
+						"value": "[parameters('AzureBatch_properties_typeProperties_poolName')]"
+					},
+					"AzureBatch_properties_typeProperties_accountName": {
+						"value": "[parameters('AzureBatch_properties_typeProperties_accountName')]"
 					}
 				}
 			},

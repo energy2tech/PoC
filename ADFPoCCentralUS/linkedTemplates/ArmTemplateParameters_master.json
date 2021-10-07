@@ -8,6 +8,9 @@
 		"ADB_accessToken": {
 			"value": ""
 		},
+		"AzureBatch_accessKey": {
+			"value": ""
+		},
 		"AzureSQLDB_connectionString": {
 			"value": ""
 		},
@@ -20,8 +23,20 @@
 		"AzureSQLDB_SQL_connectionString": {
 			"value": ""
 		},
+		"BatchPoolStorage_connectionString": {
+			"value": ""
+		},
 		"ADLSGEN2_properties_typeProperties_url": {
 			"value": "https://adlsgen2poccus.dfs.core.windows.net"
+		},
+		"AzureBatch_properties_typeProperties_batchUri": {
+			"value": "https://pocbatch.centralus.batch.azure.com"
+		},
+		"AzureBatch_properties_typeProperties_poolName": {
+			"value": "pocbatchpool"
+		},
+		"AzureBatch_properties_typeProperties_accountName": {
+			"value": "pocbatch"
 		},
 		"AzureSQLDB_properties_typeProperties_servicePrincipalId": {
 			"value": "ebd8bf29-95be-4601-ae48-6723a463ae97"
