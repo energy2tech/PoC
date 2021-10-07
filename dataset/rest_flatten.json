@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": "flatten.csv",
 				"folderPath": "flatten",
 				"fileSystem": "rest"
 			},
