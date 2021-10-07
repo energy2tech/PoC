@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"command": {
-						"value": "python batch.py",
+						"value": "py batch.py",
 						"type": "Expression"
 					},
 					"resourceLinkedService": {
