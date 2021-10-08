@@ -1,0 +1,22 @@
+{
+	"name": "xml_blob",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLSGEN2",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "xml"
+		},
+		"annotations": [],
+		"type": "Xml",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "book.xml",
+				"folderPath": "xml",
+				"fileSystem": "caterpillar"
+			}
+		}
+	}
+}
