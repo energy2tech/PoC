@@ -1,0 +1,61 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "ADFPoCCentralUS"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/xml_flatten')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "xml_blob",
+								"type": "DatasetReference"
+							},
+							"name": "source"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "xml_sql_book_desc",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						},
+						{
+							"dataset": {
+								"referenceName": "xml_sql_book_price",
+								"type": "DatasetReference"
+							},
+							"name": "sink2"
+						}
+					],
+					"transformations": [
+						{
+							"name": "FlattenBookDesc"
+						},
+						{
+							"name": "FlattenBookPrice"
+						}
+					],
+					"script": "source(output(\n\t\tcatalog as (book as ({@id} as string, author as string, description as string, genre as string, price as double, publish_date as date, title as string)[])\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tignoreNoFilesFound: false,\n\tvalidationMode: 'none',\n\tnamespaces: true) ~> source\nsource foldDown(unroll(catalog.book),\n\tmapColumn(\n\t\t{book id} = catalog.book.{@id},\n\t\tauthor = catalog.book.author,\n\t\ttitle = catalog.book.title,\n\t\tgenre = catalog.book.genre,\n\t\tpublish_date = catalog.book.publish_date,\n\t\tdescription = catalog.book.description\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> FlattenBookDesc\nsource foldDown(unroll(catalog.book),\n\tmapColumn(\n\t\t{book id} = catalog.book.{@id},\n\t\tprice = catalog.book.price\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> FlattenBookPrice\nFlattenBookDesc sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tpreSQLs:['TRUNCATE TABLE [dbo].[book_desc]'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1\nFlattenBookPrice sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tpreSQLs:['TRUNCATE TABLE [dbo].[book_price]'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink2"
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
