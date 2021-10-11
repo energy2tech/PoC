@@ -1933,7 +1933,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Data flow1",
+						"name": "xml_flatten",
 						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
