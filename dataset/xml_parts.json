@@ -5,6 +5,9 @@
 			"referenceName": "ADLSGEN2",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "xml"
+		},
 		"annotations": [],
 		"type": "Xml",
 		"typeProperties": {
