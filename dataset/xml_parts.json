@@ -1,0 +1,19 @@
+{
+	"name": "xml_parts",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLSGEN2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Xml",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "sebp5013.xml",
+				"folderPath": "parts",
+				"fileSystem": "caterpillar"
+			}
+		}
+	}
+}
