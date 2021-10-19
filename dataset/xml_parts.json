@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "sebp5013.xml",
+				"fileName": "SEBP7537.xml",
 				"folderPath": "parts",
 				"fileSystem": "caterpillar"
 			}
