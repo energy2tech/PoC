@@ -31,6 +31,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'BatchPoolStorage'"
 		},
+		"AzureFunction_ComputeSum_functionKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'functionKey' of 'AzureFunction_ComputeSum'"
+		},
 		"ADLSGEN2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsgen2poccus.dfs.core.windows.net"
@@ -46,6 +50,10 @@
 		"rest_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "http://dummy.restapiexample.com/api/v1/employees"
+		},
+		"AzureFunction_ComputeSum_properties_typeProperties_functionAppUrl": {
+			"type": "string",
+			"defaultValue": "https://poccustomerfunction.azurewebsites.net"
 		}
 	},
 	"variables": {
@@ -161,6 +169,24 @@
 			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
 			"apiVersion": "2018-06-01",
 			"properties": {},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureFunction_ComputeSum')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureFunction",
+				"typeProperties": {
+					"functionAppUrl": "[parameters('AzureFunction_ComputeSum_properties_typeProperties_functionAppUrl')]",
+					"functionKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureFunction_ComputeSum_functionKey')]"
+					},
+					"authentication": "Anonymous"
+				}
+			},
 			"dependsOn": []
 		},
 		{
@@ -520,32 +546,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureSQLDB_ManagedId')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/cat_update')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ADLSGEN2",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "Sheet1",
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "update.xlsx",
-						"fileSystem": "caterpillar"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ADLSGEN2')]"
 			]
 		}
 	]

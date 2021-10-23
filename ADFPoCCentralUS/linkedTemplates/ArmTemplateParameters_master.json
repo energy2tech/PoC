@@ -26,6 +26,9 @@
 		"BatchPoolStorage_connectionString": {
 			"value": ""
 		},
+		"AzureFunction_ComputeSum_functionKey": {
+			"value": ""
+		},
 		"ADLSGEN2_properties_typeProperties_url": {
 			"value": "https://adlsgen2poccus.dfs.core.windows.net"
 		},
@@ -46,6 +49,9 @@
 		},
 		"rest_properties_typeProperties_url": {
 			"value": "http://dummy.restapiexample.com/api/v1/employees"
+		},
+		"AzureFunction_ComputeSum_properties_typeProperties_functionAppUrl": {
+			"value": "https://poccustomerfunction.azurewebsites.net"
 		},
 		"containerUri": {
 			"value": ""

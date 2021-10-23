@@ -35,6 +35,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'BatchPoolStorage'"
 		},
+		"AzureFunction_ComputeSum_functionKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'functionKey' of 'AzureFunction_ComputeSum'"
+		},
 		"ADLSGEN2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsgen2poccus.dfs.core.windows.net"
@@ -62,6 +66,10 @@
 		"rest_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "http://dummy.restapiexample.com/api/v1/employees"
+		},
+		"AzureFunction_ComputeSum_properties_typeProperties_functionAppUrl": {
+			"type": "string",
+			"defaultValue": "https://poccustomerfunction.azurewebsites.net"
 		},
 		"containerUri": {
 			"type": "string",
@@ -108,6 +116,9 @@
 					"BatchPoolStorage_connectionString": {
 						"value": "[parameters('BatchPoolStorage_connectionString')]"
 					},
+					"AzureFunction_ComputeSum_functionKey": {
+						"value": "[parameters('AzureFunction_ComputeSum_functionKey')]"
+					},
 					"ADLSGEN2_properties_typeProperties_url": {
 						"value": "[parameters('ADLSGEN2_properties_typeProperties_url')]"
 					},
@@ -119,6 +130,9 @@
 					},
 					"rest_properties_typeProperties_url": {
 						"value": "[parameters('rest_properties_typeProperties_url')]"
+					},
+					"AzureFunction_ComputeSum_properties_typeProperties_functionAppUrl": {
+						"value": "[parameters('AzureFunction_ComputeSum_properties_typeProperties_functionAppUrl')]"
 					}
 				}
 			},
