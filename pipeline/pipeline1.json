@@ -28,12 +28,12 @@
 							"queryName": "UserQuery",
 							"dataflowSinks": [
 								{
-									"name": "SinkAzureSqlTable1",
+									"name": "SinkDelimitedText1",
 									"dataset": {
-										"referenceName": "AzureSqlTable1",
+										"referenceName": "DelimitedText1",
 										"type": "DatasetReference"
 									},
-									"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> SinkAzureSqlTable1"
+									"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SinkDelimitedText1"
 								}
 							]
 						}
