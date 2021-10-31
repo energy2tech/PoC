@@ -1,0 +1,31 @@
+{
+	"name": "cat_sql_as400",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLDB_ManagedId",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "item",
+				"type": "varchar"
+			},
+			{
+				"name": "value",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "as400_staging"
+		}
+	}
+}

@@ -1,0 +1,12 @@
+{
+	"name": "jamesxudemo_WorkspacePowerBIPOC",
+	"type": "Microsoft.Synapse/workspaces/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "PowerBIWorkspace",
+		"typeProperties": {
+			"workspaceID": "0e305ed1-cf70-465a-a6d1-7f0a2da6da58",
+			"tenantID": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+		}
+	}
+}

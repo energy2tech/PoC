@@ -1,0 +1,36 @@
+{
+	"name": "carrier_input",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLSGEN2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"ParentName": {
+				"type": "string"
+			},
+			"ChildName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": {
+					"value": "@dataset().ChildName",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "carrier/@{dataset().ParentName}",
+					"type": "Expression"
+				}
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

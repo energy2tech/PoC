@@ -1,0 +1,17 @@
+{
+	"name": "Power BI",
+	"properties": {
+		"content": {
+			"query": "-- Create database\nCreate database RetailDB\n\n-- Create view\nCREATE VIEW StoreDemographics AS\nSELECT *\nFROM\n    OPENROWSET(\n        BULK 'https://demosynapselake.dfs.core.windows.net/users/RetailData/StoreDemoGraphics.csv',\n        FORMAT = 'CSV',\n        HEADER_ROW = TRUE,\n        PARSER_VERSION = '2.0'\n    ) AS [StoreDemographics]\n\nCREATE VIEW RetailSales AS\nSELECT *\nFROM\n    OPENROWSET(\n        BULK 'https://demosynapselake.dfs.core.windows.net/users/RetailData/RetailSales.csv',\n        FORMAT = 'CSV',\n        HEADER_ROW = TRUE,\n        PARSER_VERSION = '2.0'\n    ) AS [RetailSales]\n\nCREATE VIEW Products AS\nSELECT *\nFROM\n    OPENROWSET(\n        BULK 'https://demosynapselake.dfs.core.windows.net/users/RetailData/Products.csv',\n        FORMAT = 'CSV',\n        HEADER_ROW = TRUE,\n        PARSER_VERSION = '2.0'\n    ) AS [Products]",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "RetailDB",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

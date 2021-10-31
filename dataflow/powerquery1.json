@@ -1,0 +1,20 @@
+{
+	"name": "powerquery1",
+	"properties": {
+		"type": "WranglingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "powerbi",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  powerbi",
+					"dataset": {
+						"referenceName": "powerbi",
+						"type": "DatasetReference"
+					}
+				}
+			],
+			"script": "section Section1;\r\nshared powerbi = let\r\n  AdfDoc = AzureStorage.DataLakeContents(\"https://adlsgen2poccus.dfs.core.windows.net/powerbi/sales.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared UserQuery = let\r\n  Source = powerbi,\r\n  #\"Changed column type\" = Table.TransformColumnTypes(Source, {{\"ProductID\", Int64.Type}})\r\nin\r\n  #\"Changed column type\";\r\n",
+			"documentLocale": "en-us"
+		}
+	}
+}

@@ -1,0 +1,20 @@
+{
+	"name": "sql_adls",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLSGEN2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "sql_adls",
+				"fileSystem": "rest"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
