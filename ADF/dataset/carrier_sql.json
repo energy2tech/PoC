@@ -1,0 +1,25 @@
+{
+	"name": "carrier_sql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLDB_ManagedId",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "item",
+				"type": "varchar"
+			},
+			{
+				"name": "datestring",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "input_date"
+		}
+	}
+}

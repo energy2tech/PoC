@@ -1,0 +1,20 @@
+{
+	"name": "xml",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Xml",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "book.xml",
+				"folderPath": "xml",
+				"container": "demo"
+			}
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

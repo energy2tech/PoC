@@ -1,0 +1,17 @@
+{
+	"name": "SQL",
+	"properties": {
+		"content": {
+			"query": "DROP DATABASE WWI\n\nCREATE DATABASE WWI COLLATE Latin1_General_100_BIN2_UTF8;\n\nCREATE MASTER KEY ENCRYPTION BY PASSWORD= 'Ceor--4128';\n\n-- Create a Database Scoped Credential.\nCREATE DATABASE SCOPED CREDENTIAL AppCred WITH IDENTITY = 'Managed Identity'\n-- Create an EXERNAL DATA Source.\nCREATE EXTERNAL DATA SOURCE RawDS\nWITH (\nLOCATION = 'https://demosynapselake.dfs.core.windows.net',\nCREDENTIAL = [AppCred]\n)\n\nCREATE LOGIN synapsedemo WITH PASSWORD = 'Synapse-demo';",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "WWI",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

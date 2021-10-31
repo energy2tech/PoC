@@ -1,0 +1,19 @@
+{
+	"name": "xml_sql_book_desc",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLDB_ManagedId",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "xml"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "book_desc"
+		}
+	}
+}

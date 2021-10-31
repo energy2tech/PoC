@@ -1,0 +1,11 @@
+{
+	"name": "AzureSQLDB_ManagedId",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=azuresqlpoccentralus.database.windows.net;Initial Catalog=azuresqlpoc"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
+}
