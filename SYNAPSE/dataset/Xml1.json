@@ -1,0 +1,19 @@
+{
+	"name": "Xml1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Demo_ADLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Xml",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "book.xml",
+				"folderPath": "xml",
+				"fileSystem": "demo"
+			}
+		}
+	}
+}
