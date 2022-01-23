@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"workspaceName": {
+			"value": "jamesxudemo"
+		},
+		"AzureBlobStorage_connectionString": {
+			"value": ""
+		},
+		"Demo_ADLS_accountKey": {
+			"value": ""
+		},
+		"jamesxudemo-WorkspaceDefaultSqlServer_connectionString": {
+			"value": ""
+		},
+		"Demo_ADLS_properties_typeProperties_url": {
+			"value": "https://adlsgen2poccus.dfs.core.windows.net/"
+		},
+		"jamesxudemo-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"value": "https://demosynapselake.dfs.core.windows.net"
+		},
+		"nyc_tlc_fhv_sasUri": {
+			"value": ""
+		}
+	}
+}
