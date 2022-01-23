@@ -90,12 +90,12 @@
 							"userProperties": [],
 							"typeProperties": {
 								"on": {
-									"value": "@concat(activity('CheckState').output.properties.status,'-',pipeline().parameters.PauseOrResume)",
+									"value": "@concat(activity('CheckState').output.properties.status)",
 									"type": "Expression"
 								},
 								"cases": [
 									{
-										"value": "Resume",
+										"value": "Paused",
 										"activities": [
 											{
 												"name": "SQLPoolResume",
@@ -129,7 +129,7 @@
 										]
 									},
 									{
-										"value": "Pause",
+										"value": "Online",
 										"activities": [
 											{
 												"name": "SQLPoolPause",
