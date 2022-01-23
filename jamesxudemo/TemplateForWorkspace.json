@@ -91,6 +91,216 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/PauseResume')]",
+			"type": "Microsoft.Synapse/workspaces/pipelines",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"activities": [
+					{
+						"name": "GET list",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": {
+								"value": "@concat('https://management.azure.com/subscriptions/',pipeline().parameters.SubscriptionID,'/resourceGroups/',pipeline().parameters.ResourceGroup,'/providers/Microsoft.Synapse/workspaces/',pipeline().parameters.WorkspaceName,'/sqlPools?api-version=2019-06-01-preview')",
+								"type": "Expression"
+							},
+							"connectVia": {
+								"referenceName": "AutoResolveIntegrationRuntime",
+								"type": "IntegrationRuntimeReference"
+							},
+							"method": "GET",
+							"headers": {},
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://management.azure.com/"
+							}
+						}
+					},
+					{
+						"name": "ForEach_pool",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "GET list",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('GET list').output.value",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "CheckState",
+									"type": "WebActivity",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"url": {
+											"value": "@concat('https://management.azure.com/subscriptions/',pipeline().parameters.SubscriptionID,'/resourceGroups/',pipeline().parameters.ResourceGroup,'/providers/Microsoft.Synapse/workspaces/',pipeline().parameters.WorkspaceName,'/sqlPools/',item().name,'?api-version=2019-06-01-preview')",
+											"type": "Expression"
+										},
+										"connectVia": {
+											"referenceName": "AutoResolveIntegrationRuntime",
+											"type": "IntegrationRuntimeReference"
+										},
+										"method": "GET",
+										"headers": {},
+										"authentication": {
+											"type": "MSI",
+											"resource": "https://management.azure.com/"
+										}
+									}
+								},
+								{
+									"name": "State-PauseOrResume",
+									"type": "Switch",
+									"dependsOn": [
+										{
+											"activity": "CheckState",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"on": {
+											"value": "@concat(activity('CheckState').output.properties.status)",
+											"type": "Expression"
+										},
+										"cases": [
+											{
+												"value": "Paused",
+												"activities": [
+													{
+														"name": "SQLPoolResume",
+														"type": "WebActivity",
+														"dependsOn": [],
+														"policy": {
+															"timeout": "7.00:00:00",
+															"retry": 0,
+															"retryIntervalInSeconds": 30,
+															"secureOutput": false,
+															"secureInput": false
+														},
+														"userProperties": [],
+														"typeProperties": {
+															"url": {
+																"value": "@concat('https://management.azure.com/subscriptions/',pipeline().parameters.SubscriptionID,'/resourceGroups/',pipeline().parameters.ResourceGroup,'/providers/Microsoft.Synapse/workspaces/',pipeline().parameters.WorkspaceName,'/sqlPools/',activity('CheckState').output.name,'/resume?api-version=2019-06-01-preview')",
+																"type": "Expression"
+															},
+															"connectVia": {
+																"referenceName": "AutoResolveIntegrationRuntime",
+																"type": "IntegrationRuntimeReference"
+															},
+															"method": "POST",
+															"headers": {},
+															"body": "Pause and Resume",
+															"authentication": {
+																"type": "MSI",
+																"resource": "https://management.azure.com"
+															}
+														}
+													}
+												]
+											},
+											{
+												"value": "Online",
+												"activities": [
+													{
+														"name": "SQLPoolPause",
+														"type": "WebActivity",
+														"dependsOn": [],
+														"policy": {
+															"timeout": "7.00:00:00",
+															"retry": 0,
+															"retryIntervalInSeconds": 30,
+															"secureOutput": false,
+															"secureInput": false
+														},
+														"userProperties": [],
+														"typeProperties": {
+															"url": {
+																"value": "@concat('https://management.azure.com/subscriptions/',pipeline().parameters.SubscriptionID,'/resourceGroups/',pipeline().parameters.ResourceGroup,'/providers/Microsoft.Synapse/workspaces/',pipeline().parameters.WorkspaceName,'/sqlPools/',activity('CheckState').output.name,'/pause?api-version=2019-06-01-preview')",
+																"type": "Expression"
+															},
+															"connectVia": {
+																"referenceName": "AutoResolveIntegrationRuntime",
+																"type": "IntegrationRuntimeReference"
+															},
+															"method": "POST",
+															"headers": {},
+															"body": "Pause or Resume",
+															"authentication": {
+																"type": "MSI",
+																"resource": "https://management.azure.com/"
+															}
+														}
+													}
+												]
+											}
+										]
+									}
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"ResourceGroup": {
+						"type": "string",
+						"defaultValue": "PoC"
+					},
+					"SubscriptionID": {
+						"type": "string",
+						"defaultValue": "8ede3cee-3d6d-4645-8af1-1f73f54868e3"
+					},
+					"WorkspaceName": {
+						"type": "string",
+						"defaultValue": "jamesxudemo"
+					},
+					"SQLPoolName": {
+						"type": "string",
+						"defaultValue": "livedemoDW500c"
+					},
+					"PauseorResume": {
+						"type": "string",
+						"defaultValue": "Pause"
+					}
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-01-21T19:39:09Z"
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/Pipeline 1')]",
 			"type": "Microsoft.Synapse/workspaces/pipelines",
 			"apiVersion": "2019-06-01-preview",
@@ -142,8 +352,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('workspaceId'), '/dataflows/Dataflow1')]",
-				"[concat(variables('workspaceId'), '/linkedServices/jamesxudemo-WorkspaceDefaultStorage')]",
-				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+				"[concat(variables('workspaceId'), '/linkedServices/jamesxudemo-WorkspaceDefaultStorage')]"
 			]
 		},
 		{
@@ -11873,216 +12082,6 @@
 			},
 			"dependsOn": [],
 			"location": "centralus"
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/PauseResume')]",
-			"type": "Microsoft.Synapse/workspaces/pipelines",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"activities": [
-					{
-						"name": "GET list",
-						"type": "WebActivity",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"url": {
-								"value": "@concat('https://management.azure.com/subscriptions/',pipeline().parameters.SubscriptionID,'/resourceGroups/',pipeline().parameters.ResourceGroup,'/providers/Microsoft.Synapse/workspaces/',pipeline().parameters.WorkspaceName,'/sqlPools?api-version=2019-06-01-preview')",
-								"type": "Expression"
-							},
-							"connectVia": {
-								"referenceName": "AutoResolveIntegrationRuntime",
-								"type": "IntegrationRuntimeReference"
-							},
-							"method": "GET",
-							"headers": {},
-							"authentication": {
-								"type": "MSI",
-								"resource": "https://management.azure.com/"
-							}
-						}
-					},
-					{
-						"name": "ForEach_pool",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "GET list",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('GET list').output.value",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "CheckState",
-									"type": "WebActivity",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"url": {
-											"value": "@concat('https://management.azure.com/subscriptions/',pipeline().parameters.SubscriptionID,'/resourceGroups/',pipeline().parameters.ResourceGroup,'/providers/Microsoft.Synapse/workspaces/',pipeline().parameters.WorkspaceName,'/sqlPools/',item().name,'?api-version=2019-06-01-preview')",
-											"type": "Expression"
-										},
-										"connectVia": {
-											"referenceName": "AutoResolveIntegrationRuntime",
-											"type": "IntegrationRuntimeReference"
-										},
-										"method": "GET",
-										"headers": {},
-										"authentication": {
-											"type": "MSI",
-											"resource": "https://management.azure.com/"
-										}
-									}
-								},
-								{
-									"name": "State-PauseOrResume",
-									"type": "Switch",
-									"dependsOn": [
-										{
-											"activity": "CheckState",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"userProperties": [],
-									"typeProperties": {
-										"on": {
-											"value": "@concat(activity('CheckState').output.properties.status,'-',pipeline().parameters.PauseOrResume)",
-											"type": "Expression"
-										},
-										"cases": [
-											{
-												"value": "Paused-Resume",
-												"activities": [
-													{
-														"name": "Web1",
-														"type": "WebActivity",
-														"dependsOn": [],
-														"policy": {
-															"timeout": "7.00:00:00",
-															"retry": 0,
-															"retryIntervalInSeconds": 30,
-															"secureOutput": false,
-															"secureInput": false
-														},
-														"userProperties": [],
-														"typeProperties": {
-															"url": {
-																"value": "@concat('https://management.azure.com/subscriptions/',pipeline().parameters.SubscriptionID,'/resourceGroups/',pipeline().parameters.ResourceGroup,'/providers/Microsoft.Synapse/workspaces/',pipeline().parameters.WorkspaceName,'/sqlPools/',activity('CheckState').output.name,'/resume?api-version=2019-06-01-preview')",
-																"type": "Expression"
-															},
-															"connectVia": {
-																"referenceName": "AutoResolveIntegrationRuntime",
-																"type": "IntegrationRuntimeReference"
-															},
-															"method": "POST",
-															"headers": {},
-															"body": "Pause and Resume",
-															"authentication": {
-																"type": "MSI",
-																"resource": "https://management.azure.com"
-															}
-														}
-													}
-												]
-											},
-											{
-												"value": "Online-Pause",
-												"activities": [
-													{
-														"name": "Web2",
-														"type": "WebActivity",
-														"dependsOn": [],
-														"policy": {
-															"timeout": "7.00:00:00",
-															"retry": 0,
-															"retryIntervalInSeconds": 30,
-															"secureOutput": false,
-															"secureInput": false
-														},
-														"userProperties": [],
-														"typeProperties": {
-															"url": {
-																"value": "@concat('https://management.azure.com/subscriptions/',pipeline().parameters.SubscriptionID,'/resourceGroups/',pipeline().parameters.ResourceGroup,'/providers/Microsoft.Synapse/workspaces/',pipeline().parameters.WorkspaceName,'/sqlPools/',activity('CheckState').output.name,'/pause?api-version=2019-06-01-preview')",
-																"type": "Expression"
-															},
-															"connectVia": {
-																"referenceName": "AutoResolveIntegrationRuntime",
-																"type": "IntegrationRuntimeReference"
-															},
-															"method": "POST",
-															"headers": {},
-															"body": "Pause or Resume",
-															"authentication": {
-																"type": "MSI",
-																"resource": "https://management.azure.com/"
-															}
-														}
-													}
-												]
-											}
-										]
-									}
-								}
-							]
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"parameters": {
-					"ResourceGroup": {
-						"type": "string",
-						"defaultValue": "PoC"
-					},
-					"SubscriptionID": {
-						"type": "string",
-						"defaultValue": "8ede3cee-3d6d-4645-8af1-1f73f54868e3"
-					},
-					"WorkspaceName": {
-						"type": "string",
-						"defaultValue": "jamesxudemo"
-					},
-					"SQLPoolName": {
-						"type": "string",
-						"defaultValue": "livedemoDW500c"
-					},
-					"PauseorResume": {
-						"type": "string",
-						"defaultValue": "Pause"
-					}
-				},
-				"annotations": [],
-				"lastPublishTime": "2022-01-21T19:39:09Z"
-			},
-			"dependsOn": [
-				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
-			]
 		}
 	]
 }
