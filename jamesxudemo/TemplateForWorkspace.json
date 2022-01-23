@@ -186,12 +186,12 @@
 									"userProperties": [],
 									"typeProperties": {
 										"on": {
-											"value": "@activity('CheckState').output.properties.status",
+											"value": "@concat(activity('CheckState').output.properties.status,'-',pipeline().parameters.PauseOrResume)",
 											"type": "Expression"
 										},
 										"cases": [
 											{
-												"value": "Paused",
+												"value": "Paused-Resume",
 												"activities": [
 													{
 														"name": "SQLPoolResume",
@@ -226,7 +226,7 @@
 												]
 											},
 											{
-												"value": "Online",
+												"value": "Online-Pause",
 												"activities": [
 													{
 														"name": "SQLPoolPause",
@@ -307,7 +307,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Data flow1",
+						"name": "XML",
 						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
@@ -352,7 +352,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('workspaceId'), '/dataflows/Dataflow1')]",
-				"[concat(variables('workspaceId'), '/linkedServices/jamesxudemo-WorkspaceDefaultStorage')]"
+				"[concat(variables('workspaceId'), '/linkedServices/jamesxudemo-WorkspaceDefaultStorage')]",
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
 			]
 		},
 		{
