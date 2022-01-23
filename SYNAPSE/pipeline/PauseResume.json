@@ -90,7 +90,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"on": {
-									"value": "@concat(activity('CheckState').output.properties.status)",
+									"value": "@activity('CheckState').output.properties.status",
 									"type": "Expression"
 								},
 								"cases": [
