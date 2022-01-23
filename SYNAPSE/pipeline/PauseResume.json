@@ -95,10 +95,10 @@
 								},
 								"cases": [
 									{
-										"value": "Paused-Resume",
+										"value": "Resume",
 										"activities": [
 											{
-												"name": "Web1",
+												"name": "SQLPoolResume",
 												"type": "WebActivity",
 												"dependsOn": [],
 												"policy": {
@@ -129,10 +129,10 @@
 										]
 									},
 									{
-										"value": "Online-Pause",
+										"value": "Pause",
 										"activities": [
 											{
-												"name": "Web2",
+												"name": "SQLPoolPause",
 												"type": "WebActivity",
 												"dependsOn": [],
 												"policy": {
