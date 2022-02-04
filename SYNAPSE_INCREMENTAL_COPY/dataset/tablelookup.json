@@ -1,0 +1,38 @@
+{
+	"name": "tablelookup",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "SourceTableSchema",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SourceTableName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SourceCDCTableName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TargetTableSchema",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TargetTableName",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "tablelookup"
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

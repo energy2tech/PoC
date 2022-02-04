@@ -1,0 +1,252 @@
+{
+	"name": "Iterate-and-Copy-SQL-Tables",
+	"properties": {
+		"activities": [
+			{
+				"name": "IterateSQLTables",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.tableList",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "LookupOldWaterMarkActivity",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": {
+										"value": "select * from [dbo].[watermarktable] where [SourceCDCTableName] =  '@{item().SourceCDCTableName}'",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "watermarktable",
+									"type": "DatasetReference"
+								},
+								"firstRowOnly": true
+							}
+						},
+						{
+							"name": "LookupNewWaterMarkActivity",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": {
+										"value": "select MAX(TM.tran_begin_time) as NewWatermarkValue from [cdc].[@{item().SourceCDCTableName}] CDC INNER JOIN [cdc].[lsn_time_mapping] TM on CDC.__$start_lsn = TM.start_lsn",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "watermarktable",
+									"type": "DatasetReference"
+								},
+								"firstRowOnly": true
+							}
+						},
+						{
+							"name": "GetChangeCount",
+							"type": "Lookup",
+							"dependsOn": [
+								{
+									"activity": "LookupOldWaterMarkActivity",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								},
+								{
+									"activity": "LookupNewWaterMarkActivity",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": {
+										"value": "select count(*) as changecount from [cdc].[@{item().SourceCDCTableName}] CDC INNER JOIN [cdc].[lsn_time_mapping] TM on CDC.__$start_lsn = TM.start_lsn  \nwhere tran_begin_time >\n'@{activity('LookupOldWaterMarkActivity').output.firstRow.WatermarkValue}' and tran_begin_time <= '@{activity('LookupNewWaterMarkActivity').output.firstRow.NewWatermarkValue}'",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "watermarktable",
+									"type": "DatasetReference"
+								},
+								"firstRowOnly": true
+							}
+						},
+						{
+							"name": "HasChangedRows",
+							"type": "IfCondition",
+							"dependsOn": [
+								{
+									"activity": "GetChangeCount",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"expression": {
+									"value": "@greater(int(activity('GetChangeCount').output.firstRow.changecount),0)",
+									"type": "Expression"
+								},
+								"ifTrueActivities": [
+									{
+										"name": "Copy data1",
+										"type": "Copy",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"source": {
+												"type": "AzureSqlSource",
+												"sqlReaderQuery": {
+													"value": "select CDC.*, TM.tran_begin_time from [cdc].[@{item().SourceCDCTableName}] CDC INNER JOIN [cdc].[lsn_time_mapping] TM on CDC.__$start_lsn = TM.start_lsn\nwhere tran_begin_time >\n'@{activity('LookupOldWaterMarkActivity').output.firstRow.WatermarkValue}' and tran_begin_time <= '@{activity('LookupNewWaterMarkActivity').output.firstRow.NewWatermarkValue}'",
+													"type": "Expression"
+												},
+												"queryTimeout": "02:00:00",
+												"partitionOption": "None"
+											},
+											"sink": {
+												"type": "SqlPoolSink",
+												"writeBehavior": "Insert",
+												"sqlWriterUseTableLock": false,
+												"tableOption": "autoCreate"
+											},
+											"enableStaging": false,
+											"translator": {
+												"type": "TabularTranslator",
+												"typeConversion": true,
+												"typeConversionSettings": {
+													"allowDataTruncation": true,
+													"treatBooleanAsNumber": false
+												}
+											}
+										},
+										"inputs": [
+											{
+												"referenceName": "watermarktable",
+												"type": "DatasetReference"
+											}
+										],
+										"outputs": [
+											{
+												"referenceName": "SqlPoolTable",
+												"type": "DatasetReference",
+												"parameters": {
+													"DWTableSchema": {
+														"value": "@{item().TargetTableSchema}",
+														"type": "Expression"
+													},
+													"DWTableName": {
+														"value": "@{item().TargetTableName}",
+														"type": "Expression"
+													}
+												}
+											}
+										]
+									},
+									{
+										"name": "WriteWatermarkActivity",
+										"type": "SqlServerStoredProcedure",
+										"dependsOn": [
+											{
+												"activity": "Copy data1",
+												"dependencyConditions": [
+													"Succeeded"
+												]
+											}
+										],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"storedProcedureName": "[dbo].[usp_write_watermark]",
+											"storedProcedureParameters": {
+												"LastModifiedtime": {
+													"value": {
+														"value": "@{activity('LookupNewWaterMarkActivity').output.firstRow.NewWatermarkValue}",
+														"type": "Expression"
+													}
+												},
+												"TableName": {
+													"value": {
+														"value": "@{activity('LookupOldWaterMarkActivity').output.firstRow.SourceCDCTableName}",
+														"type": "Expression"
+													}
+												}
+											}
+										},
+										"linkedServiceName": {
+											"referenceName": "AzureSqlDatabase1",
+											"type": "LinkedServiceReference"
+										}
+									}
+								]
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"tableList": {
+				"type": "array"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-01-30T21:11:53Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}
