@@ -11,6 +11,9 @@
 		"AzureBatch_accessKey": {
 			"value": ""
 		},
+		"AzureFunction_ComputeSum_functionKey": {
+			"value": ""
+		},
 		"AzureSQLDB_connectionString": {
 			"value": ""
 		},
@@ -26,9 +29,6 @@
 		"BatchPoolStorage_connectionString": {
 			"value": ""
 		},
-		"AzureFunction_ComputeSum_functionKey": {
-			"value": ""
-		},
 		"ADLSGEN2_properties_typeProperties_url": {
 			"value": "https://adlsgen2poccus.dfs.core.windows.net"
 		},
@@ -41,6 +41,9 @@
 		"AzureBatch_properties_typeProperties_accountName": {
 			"value": "pocbatch"
 		},
+		"AzureFunction_ComputeSum_properties_typeProperties_functionAppUrl": {
+			"value": "https://poccustomerfunction.azurewebsites.net"
+		},
 		"AzureSQLDB_properties_typeProperties_servicePrincipalId": {
 			"value": "ebd8bf29-95be-4601-ae48-6723a463ae97"
 		},
@@ -49,9 +52,6 @@
 		},
 		"rest_properties_typeProperties_url": {
 			"value": "http://dummy.restapiexample.com/api/v1/employees"
-		},
-		"AzureFunction_ComputeSum_properties_typeProperties_functionAppUrl": {
-			"value": "https://poccustomerfunction.azurewebsites.net"
 		}
 	}
 }

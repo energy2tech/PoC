@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accessKey' of 'AzureBatch'"
 		},
+		"AzureFunction_ComputeSum_functionKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'functionKey' of 'AzureFunction_ComputeSum'"
+		},
 		"AzureSQLDB_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSQLDB'"
@@ -35,10 +39,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'BatchPoolStorage'"
 		},
-		"AzureFunction_ComputeSum_functionKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'functionKey' of 'AzureFunction_ComputeSum'"
-		},
 		"ADLSGEN2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsgen2poccus.dfs.core.windows.net"
@@ -55,6 +55,10 @@
 			"type": "string",
 			"defaultValue": "pocbatch"
 		},
+		"AzureFunction_ComputeSum_properties_typeProperties_functionAppUrl": {
+			"type": "string",
+			"defaultValue": "https://poccustomerfunction.azurewebsites.net"
+		},
 		"AzureSQLDB_properties_typeProperties_servicePrincipalId": {
 			"type": "string",
 			"defaultValue": "ebd8bf29-95be-4601-ae48-6723a463ae97"
@@ -66,10 +70,6 @@
 		"rest_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "http://dummy.restapiexample.com/api/v1/employees"
-		},
-		"AzureFunction_ComputeSum_properties_typeProperties_functionAppUrl": {
-			"type": "string",
-			"defaultValue": "https://poccustomerfunction.azurewebsites.net"
 		},
 		"containerUri": {
 			"type": "string",
@@ -101,6 +101,9 @@
 					"ADB_accessToken": {
 						"value": "[parameters('ADB_accessToken')]"
 					},
+					"AzureFunction_ComputeSum_functionKey": {
+						"value": "[parameters('AzureFunction_ComputeSum_functionKey')]"
+					},
 					"AzureSQLDB_connectionString": {
 						"value": "[parameters('AzureSQLDB_connectionString')]"
 					},
@@ -116,11 +119,11 @@
 					"BatchPoolStorage_connectionString": {
 						"value": "[parameters('BatchPoolStorage_connectionString')]"
 					},
-					"AzureFunction_ComputeSum_functionKey": {
-						"value": "[parameters('AzureFunction_ComputeSum_functionKey')]"
-					},
 					"ADLSGEN2_properties_typeProperties_url": {
 						"value": "[parameters('ADLSGEN2_properties_typeProperties_url')]"
+					},
+					"AzureFunction_ComputeSum_properties_typeProperties_functionAppUrl": {
+						"value": "[parameters('AzureFunction_ComputeSum_properties_typeProperties_functionAppUrl')]"
 					},
 					"AzureSQLDB_properties_typeProperties_servicePrincipalId": {
 						"value": "[parameters('AzureSQLDB_properties_typeProperties_servicePrincipalId')]"
@@ -130,9 +133,6 @@
 					},
 					"rest_properties_typeProperties_url": {
 						"value": "[parameters('rest_properties_typeProperties_url')]"
-					},
-					"AzureFunction_ComputeSum_properties_typeProperties_functionAppUrl": {
-						"value": "[parameters('AzureFunction_ComputeSum_properties_typeProperties_functionAppUrl')]"
 					}
 				}
 			},
