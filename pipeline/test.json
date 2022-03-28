@@ -1,0 +1,25 @@
+{
+	"name": "test",
+	"properties": {
+		"activities": [
+			{
+				"name": "Web1",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://management.azure.com/subscriptions/8ede3cee-3d6d-4645-8af1-1f73f54868e3/resourceGroups/PoC/providers/Microsoft.DataFactory/factories/ADFPoCCentralUS/pipelines/api_copy?api-version=2018-06-01",
+					"method": "PUT"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
