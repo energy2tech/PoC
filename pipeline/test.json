@@ -17,6 +17,9 @@
 				"typeProperties": {
 					"url": "https://management.azure.com/subscriptions/8ede3cee-3d6d-4645-8af1-1f73f54868e3/resourceGroups/PoC/providers/Microsoft.DataFactory/factories/ADFPoCCentralUS/pipelines/api_copy?api-version=2018-06-01",
 					"method": "PUT",
+					"headers": {
+						"Content-type": "application/json"
+					},
 					"body": {
 						"name": "api_copy",
 						"properties": {
