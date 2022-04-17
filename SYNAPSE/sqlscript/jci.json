@@ -2,12 +2,12 @@
 	"name": "jci",
 	"properties": {
 		"content": {
-			"query": "select top 10 *\nfrom openrowset(\n    bulk 'https://demosynapselake.dfs.core.windows.net/users/jci/FactInternetSales.csv',\n    format = 'csv',\n    header_row = TRUE,\n    parser_version = '2.0') as rows\n\n-- Create database\ncreate database jci\n\n-- Create view\nCREATE VIEW FactInternetSales AS\nSELECT *\nFROM\n    OPENROWSET(\n        BULK 'https://demosynapselake.dfs.core.windows.net/users/jci/FactInternetSales.csv',\n        FORMAT = 'CSV',\n        HEADER_ROW = TRUE,\n        PARSER_VERSION = '2.0'\n    ) AS [FactInternetSales]",
+			"query": "select top 10 *\nfrom openrowset(\n    bulk 'https://demosynapselake.dfs.core.windows.net/users/jci/FactInternetSales.csv',\n    format = 'csv',\n    header_row = TRUE,\n    parser_version = '2.0') as rows\n\n-- Create database\ncreate database jci\n\n-- Create a Database Scoped Credential.\nCREATE MASTER KEY ENCRYPTION BY PASSWORD= 'Ceor--4128';\nCREATE DATABASE SCOPED CREDENTIAL AppCred WITH IDENTITY = 'Managed Identity'\n\n-- Create view\nCREATE VIEW FactInternetSales AS\nSELECT *\nFROM\n    OPENROWSET(\n        BULK 'https://demosynapselake.dfs.core.windows.net/users/jci/FactInternetSales.csv',\n        FORMAT = 'CSV',\n        HEADER_ROW = TRUE,\n        PARSER_VERSION = '2.0'\n    ) AS [FactInternetSales]\n\nSELECT *\nFROM FactInternetSales",
 			"metadata": {
 				"language": "sql"
 			},
 			"currentConnection": {
-				"databaseName": "master",
+				"databaseName": "jci",
 				"poolName": "Built-in"
 			},
 			"resultLimit": 5000
