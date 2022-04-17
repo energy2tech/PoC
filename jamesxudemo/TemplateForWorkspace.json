@@ -710,7 +710,7 @@
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
 				"content": {
-					"query": "select top 10 *\nfrom openrowset(\n    bulk 'https://demosynapselake.dfs.core.windows.net/users/jci/FactInternetSales.csv',\n    format = 'csv',\n    header_row = TRUE,\n    parser_version = '2.0') as rows\n\n-- Create database\nCreate database jci\n\n-- Create view\nCREATE VIEW FactInternetSales AS\nSELECT *\nFROM\n    OPENROWSET(\n        BULK 'https://demosynapselake.dfs.core.windows.net/users/jci/FactInternetSales.csv',\n        FORMAT = 'CSV',\n        HEADER_ROW = TRUE,\n        PARSER_VERSION = '2.0'\n    ) AS [FactInternetSales]",
+					"query": "select top 10 *\nfrom openrowset(\n    bulk 'https://demosynapselake.dfs.core.windows.net/users/jci/FactInternetSales.csv',\n    format = 'csv',\n    header_row = TRUE,\n    parser_version = '2.0') as rows\n\n-- Create database\ncreate database jci\n\n-- Create view\nCREATE VIEW FactInternetSales AS\nSELECT *\nFROM\n    OPENROWSET(\n        BULK 'https://demosynapselake.dfs.core.windows.net/users/jci/FactInternetSales.csv',\n        FORMAT = 'CSV',\n        HEADER_ROW = TRUE,\n        PARSER_VERSION = '2.0'\n    ) AS [FactInternetSales]",
 					"metadata": {
 						"language": "sql"
 					},
