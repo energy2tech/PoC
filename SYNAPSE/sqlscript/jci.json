@@ -1,0 +1,17 @@
+{
+	"name": "jci",
+	"properties": {
+		"content": {
+			"query": "select top 10 *\nfrom openrowset(\n    bulk 'https://demosynapselake.blob.core.windows.net/users/jci/FactInternetSales.csv',\n    format = 'csv',\n    parser_version = '2.0',\n    header_row = TRUE) as rows",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
