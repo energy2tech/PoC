@@ -710,7 +710,7 @@
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
 				"content": {
-					"query": "select top 10 *\nfrom openrowset(\n    bulk 'https://demosynapselake.dfs.core.windows.net/users/jci/FactInternetSales.csv',\n    format = 'csv',\n    header_row = TRUE,\n    parser_version = '2.0') as rows\n\n-- Create database\ncreate database jci\n\n-- Create a Database Scoped Credential.\nCREATE MASTER KEY ENCRYPTION BY PASSWORD= 'Ceor--4128';\nCREATE DATABASE SCOPED CREDENTIAL AppCred WITH IDENTITY = 'Managed Identity'\n\n-- Create view\nDROP VIEW IF EXISTS FactInternetSales\nCREATE VIEW FactInternetSales AS\nSELECT *\nFROM\n    OPENROWSET(\n        BULK 'https://demosynapselake.dfs.core.windows.net/users/jci/FactInternetSales.csv',\n        FORMAT = 'CSV',\n        HEADER_ROW = TRUE,\n        PARSER_VERSION = '2.0'\n    ) AS [FactInternetSales]\n\nDROP VIEW IF EXISTS DimProduct\n\nCREATE VIEW DimProduct AS\nSELECT *\nFROM\n    OPENROWSET(\n        BULK 'https://demosynapselake.dfs.core.windows.net/users/jci/DimProduct.csv',\n        FORMAT = 'CSV',\n        HEADER_ROW = TRUE,\n        PARSER_VERSION = '2.0'\n    ) AS [DimProduct]\n\nDROP VIEW IF EXISTS DimDate\nCREATE VIEW DimDate AS\nSELECT *\nFROM\n    OPENROWSET(\n        BULK 'https://demosynapselake.dfs.core.windows.net/users/jci/DimDate.csv',\n        FORMAT = 'CSV',\n        HEADER_ROW = TRUE,\n        PARSER_VERSION = '2.0'\n    ) AS [DimDate]\n",
+					"query": "select top 10 *\nfrom openrowset(\n    bulk 'https://demosynapselake.dfs.core.windows.net/users/jci/FactInternetSales.csv',\n    format = 'csv',\n    header_row = TRUE,\n    parser_version = '2.0') as rows\n\n-- Create database\ncreate database jci\n\n-- Create a Database Scoped Credential.\nCREATE MASTER KEY ENCRYPTION BY PASSWORD= 'Ceor--4128';\nCREATE DATABASE SCOPED CREDENTIAL AppCred WITH IDENTITY = 'Managed Identity'\n\n-- Create view\nDROP VIEW IF EXISTS FactInternetSales\nCREATE VIEW FactInternetSales AS\nSELECT *\nFROM\n    OPENROWSET(\n        BULK 'https://demosynapselake.dfs.core.windows.net/users/jci/FactInternetSales.csv',\n        FORMAT = 'CSV',\n        HEADER_ROW = TRUE,\n        PARSER_VERSION = '2.0'\n    ) AS [FactInternetSales]\n\nDROP VIEW IF EXISTS DimProduct\n\nCREATE VIEW DimProduct AS\nSELECT *\nFROM\n    OPENROWSET(\n        BULK 'https://demosynapselake.dfs.core.windows.net/users/jci/DimProduct.csv',\n        FORMAT = 'CSV',\n        HEADER_ROW = TRUE,\n        PARSER_VERSION = '2.0'\n    ) AS [DimProduct]\n\nDROP VIEW IF EXISTS DimDate\nCREATE VIEW DimDate AS\nSELECT *\nFROM\n    OPENROWSET(\n        BULK 'https://demosynapselake.dfs.core.windows.net/users/jci/DimDate.csv',\n        FORMAT = 'CSV',\n        HEADER_ROW = TRUE,\n        PARSER_VERSION = '2.0'\n    ) AS [DimDate]\n\nSELECT COUNT(*) FROM FactInternetSales\nSELECT COUNT(*) FROM DimProduct\nSELECT COUNT(*) FROM DimDate\n",
 					"metadata": {
 						"language": "sql"
 					},
@@ -12080,6 +12080,30 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/livedemoDW500c')]",
+			"type": "Microsoft.Synapse/workspaces/sqlPools",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"collation": "SQL_Latin1_General_CP1_CI_AS",
+				"maxSizeBytes": 263882790666240,
+				"annotations": []
+			},
+			"dependsOn": [],
+			"location": "centralus"
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SampleSQL')]",
+			"type": "Microsoft.Synapse/workspaces/sqlPools",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"collation": "SQL_Latin1_General_CP1_CI_AS",
+				"maxSizeBytes": 263882790666240,
+				"annotations": []
+			},
+			"dependsOn": [],
+			"location": "centralus"
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/SampleSpark')]",
 			"type": "Microsoft.Synapse/workspaces/bigDataPools",
 			"apiVersion": "2019-06-01-preview",
@@ -12124,30 +12148,6 @@
 				"sparkVersion": "3.1",
 				"isComputeIsolationEnabled": false,
 				"sessionLevelPackagesEnabled": true,
-				"annotations": []
-			},
-			"dependsOn": [],
-			"location": "centralus"
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/livedemoDW500c')]",
-			"type": "Microsoft.Synapse/workspaces/sqlPools",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"collation": "SQL_Latin1_General_CP1_CI_AS",
-				"maxSizeBytes": 263882790666240,
-				"annotations": []
-			},
-			"dependsOn": [],
-			"location": "centralus"
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SampleSQL')]",
-			"type": "Microsoft.Synapse/workspaces/sqlPools",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"collation": "SQL_Latin1_General_CP1_CI_AS",
-				"maxSizeBytes": 263882790666240,
 				"annotations": []
 			},
 			"dependsOn": [],
