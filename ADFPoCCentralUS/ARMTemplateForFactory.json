@@ -1514,8 +1514,7 @@
 								"parameters": {},
 								"datasetParameters": {
 									"source": {},
-									"sink1": {},
-									"sink2": {}
+									"sink1": {}
 								}
 							},
 							"staging": {},
@@ -2644,31 +2643,25 @@
 								"referenceName": "xml_sql_book_desc",
 								"type": "DatasetReference"
 							},
-							"name": "sink1"
-						},
-						{
-							"dataset": {
-								"referenceName": "xml_sql_book_price",
-								"type": "DatasetReference"
-							},
-							"name": "sink2"
+							"name": "sink1",
+							"rejectedDataLinkedService": {
+								"referenceName": "ADLSGEN2",
+								"type": "LinkedServiceReference"
+							}
 						}
 					],
 					"transformations": [
 						{
 							"name": "FlattenBookDesc"
-						},
-						{
-							"name": "FlattenBookPrice"
 						}
 					],
-					"script": "source(output(\n\t\tcatalog as (book as ({@id} as string, author as string, description as string, genre as string, price as double, publish_date as date, title as string)[])\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tignoreNoFilesFound: false,\n\tvalidationMode: 'none',\n\tnamespaces: true) ~> source\nsource foldDown(unroll(catalog.book),\n\tmapColumn(\n\t\t{book id} = catalog.book.{@id},\n\t\tauthor = catalog.book.author,\n\t\ttitle = catalog.book.title,\n\t\tgenre = catalog.book.genre,\n\t\tpublish_date = catalog.book.publish_date,\n\t\tdescription = catalog.book.description\n\t),\n\tpartitionBy('roundRobin', 2),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> FlattenBookDesc\nsource foldDown(unroll(catalog.book),\n\tmapColumn(\n\t\t{book id} = catalog.book.{@id},\n\t\tprice = catalog.book.price\n\t),\n\tpartitionBy('roundRobin', 2),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> FlattenBookPrice\nFlattenBookDesc sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tpreSQLs:['TRUNCATE TABLE [dbo].[book_desc]'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1\nFlattenBookPrice sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tpreSQLs:['TRUNCATE TABLE [dbo].[book_price]'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink2"
+					"script": "source(output(\n\t\tcatalog as (book as ({@id} as string, author as string, description as string, genre as string, price as double, publish_date as date, title as string)[])\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tignoreNoFilesFound: false,\n\tvalidationMode: 'none',\n\tnamespaces: true) ~> source\nsource foldDown(unroll(catalog.book),\n\tmapColumn(\n\t\t{book id} = catalog.book.{@id},\n\t\tauthor = catalog.book.author,\n\t\ttitle = catalog.book.title,\n\t\tgenre = catalog.book.genre,\n\t\tpublish_date = catalog.book.publish_date,\n\t\tdescription = catalog.book.description\n\t),\n\tpartitionBy('roundRobin', 2),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> FlattenBookDesc\nFlattenBookDesc sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tpreSQLs:['TRUNCATE TABLE [dbo].[book_desc]'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'allErrors',\n\toutputRejectedData: true,\n\trejectedData_fileSystem: 'ecolab',\n\trejectedData_folderPath: 'error',\n\ttransactionCommit: 'single',\n\treportSuccessOnError: true) ~> sink1"
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/xml_blob')]",
 				"[concat(variables('factoryId'), '/datasets/xml_sql_book_desc')]",
-				"[concat(variables('factoryId'), '/datasets/xml_sql_book_price')]"
+				"[concat(variables('factoryId'), '/linkedServices/ADLSGEN2')]"
 			]
 		},
 		{
@@ -2677,6 +2670,53 @@
 			"apiVersion": "2018-06-01",
 			"properties": {},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/xml_flatten_error_row_handling')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "xml_flatten",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "xml_flatten",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/xml_flatten')]"
+			]
 		}
 	]
 }
