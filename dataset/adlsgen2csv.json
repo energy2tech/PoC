@@ -15,7 +15,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "agency",
+				"folderPath": {
+					"value": "@dataset().FolderName",
+					"type": "Expression"
+				},
 				"fileSystem": {
 					"value": "rti/input",
 					"type": "Expression"
