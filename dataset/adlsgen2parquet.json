@@ -20,7 +20,7 @@
 					"type": "Expression"
 				},
 				"fileSystem": {
-					"value": "rti/output",
+					"value": "rti/output/test",
 					"type": "Expression"
 				}
 			},
