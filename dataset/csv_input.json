@@ -5,6 +5,12 @@
 			"referenceName": "ADLSGEN2",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"folder": {
+				"type": "string",
+				"defaultValue": "rti"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
