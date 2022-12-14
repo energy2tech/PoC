@@ -1,9 +1,9 @@
 {
-	"name": "api_flatten",
+	"name": "xml_flatten_error_row_handling",
 	"properties": {
 		"activities": [
 			{
-				"name": "rest_flatten",
+				"name": "xml_flatten",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "rest_flatten",
+						"referenceName": "xml_flatten",
 						"type": "DataFlowReference"
 					},
 					"compute": {
@@ -28,7 +28,7 @@
 			}
 		],
 		"annotations": [],
-		"lastPublishTime": "2021-10-07T20:19:14Z"
+		"lastPublishTime": "2022-04-30T18:48:08Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

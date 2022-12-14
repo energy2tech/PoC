@@ -1,5 +1,5 @@
 {
-	"name": "api",
+	"name": "api_copy",
 	"properties": {
 		"activities": [
 			{
@@ -7,9 +7,9 @@
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
+					"timeout": "1.00:00:00",
+					"retry": 1,
+					"retryIntervalInSeconds": 60,
 					"secureOutput": false,
 					"secureInput": false
 				},
@@ -47,7 +47,7 @@
 			}
 		],
 		"annotations": [],
-		"lastPublishTime": "2021-10-07T20:19:14Z"
+		"lastPublishTime": "2022-03-29T02:02:27Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

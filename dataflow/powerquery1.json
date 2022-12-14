@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"name": "powerbi",
-					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  powerbi",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> powerbi",
 					"dataset": {
 						"referenceName": "powerbi",
 						"type": "DatasetReference"

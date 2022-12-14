@@ -1,0 +1,89 @@
+{
+	"name": "variables",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set Variable",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "array",
+					"value": {
+						"value": "@createArray(1, 2, 3)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Set Variable",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('array')",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Set temp variable",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "tempnumber",
+								"value": {
+									"value": "@concat(variables('number'), ',', item())",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Set variable 1",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Set temp variable",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "number",
+								"value": {
+									"value": "@variables('tempnumber')",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
+			}
+		],
+		"variables": {
+			"array": {
+				"type": "Array"
+			},
+			"number": {
+				"type": "String"
+			},
+			"tempnumber": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-05-05T01:44:27Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
